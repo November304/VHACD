@@ -44,12 +44,12 @@ public class VHACDEditorWindow : EditorWindow
         vhacdComponent = targetObject.GetComponent<VHACD>();
         if (vhacdComponent == null)
         {
-            vhacdComponent = targetObject.AddComponent<VHACD>();
+            Debug.LogError("Selected object has no VHACD component.");
+            return;
         }
 
         var resultMeshes = vhacdComponent.GenerateConvexMeshes();
 
-        // Optional: Create child GameObjects for each hull
         for (int i = 0; i < resultMeshes.Count; i++)
         {
             var go = new GameObject($"ConvexHull_{i}");
@@ -63,7 +63,7 @@ public class VHACDEditorWindow : EditorWindow
             var mc = go.AddComponent<MeshCollider>();
 
             mf.sharedMesh = resultMeshes[i];
-            mr.sharedMaterial = new Material(Shader.Find("Standard"));
+            mr.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
             mc.sharedMesh = resultMeshes[i];
             mc.convex = true;
         }
