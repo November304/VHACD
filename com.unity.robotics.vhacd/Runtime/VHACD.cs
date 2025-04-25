@@ -131,12 +131,9 @@ namespace MeshProcess
         public VHACD() { m_parameters.Init(); }
 
         [ContextMenu("Generate Convex Meshes")]
-        public unsafe List<Mesh> GenerateConvexMeshes(Mesh mesh = null)
+        public unsafe List<Mesh> GenerateConvexMeshes()
         {
-            if (mesh == null)
-            {
-                mesh = GetComponent<MeshFilter>().sharedMesh;
-            }
+            Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
             var vhacd = CreateVHACD();
             var parameters = m_parameters;
 
